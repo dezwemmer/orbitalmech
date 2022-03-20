@@ -1,7 +1,7 @@
 # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 # Orbital Mechanics & Dynamics Software Collection
 # Author:   Steven Anderson
-# Created:  Mar 2022
+# Created:  MAR 2022
 # Brief:    Example 2.3
 #           Chandra X-ray Observatory example
 # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -13,6 +13,7 @@ import constantsKluever as const
 altPer = 14308 #km
 altApo = 134528 #km
 
+#####
 # (a) calculate angular momentum of orbit
 radPer = altPer + const.rE
 radApo = altApo + const.rE
@@ -23,12 +24,13 @@ print (param)
 angMom = math.sqrt(param * const.mu)
 print('Angular Momentum: {:.3f} [km^2/s]'.format(angMom))
 
+#####
 # (b) calculate total energy of orbit
 totSpEnergy = -const.mu / (2 * semiMajorAxis)
 print('Total Specific Energy: {:.3f} [km^2/s^2]'.format(totSpEnergy))
 
+#####
 # (c) calculate radius/velocity/FPA @ true anomaly 120 degrees
-
 # calculate radius using trajectory eqn
 rad = param / (1 + ecc * math.cos(math.radians(120)))
 # calculate velocity using energy eqn

@@ -1,9 +1,9 @@
 # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 # Orbital Mechanics & Dynamics Software Collection
 # Author:   Steven Anderson
-# Created:  Feb 2022
+# Created:  FEB 2022
 # Brief:    Constants Used in Kleuver (2018) necessary for
-#           completing the exercises in this text.
+#           completing the exercises in this folder.
 # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 rE = 6378             # Radius of Earth [km]
