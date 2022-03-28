@@ -28,10 +28,6 @@ velCirc_LEO = math.sqrt( const.mu / radCirc_LEO )
 print('GTO Perigee Velocity: {:.3f} [km/s]'.format(velPer_GTO))
 print('LEO Circular Velocity: {:.3f} [km/s]'.format(velCirc_LEO))
 
-ecc_GTO = ( radApo_GTO - radPer_GTO )/( radPer_GTO + radApo_GTO )
-param_GTO = semiMajorAxis_GTO * ( 1 - ecc_GTO**2 )
-
-
 #####
 # (b) calculate apogee velocity on GTO & GEO circular velocity
 velApo_GTO = math.sqrt( 2 * ( totSpecEnergy_GTO + const.mu / radApo_GTO ) )
