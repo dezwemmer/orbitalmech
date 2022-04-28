@@ -50,6 +50,7 @@ for i in range(-179,179,20):
     r,v = computeRadVelfromTA(i,param)
     velList.append(v)
 
+# plot
 fig,ax = plt.subplots()
 ax.plot(TAList,velList)
 ax.set_xlabel('True Anomaly [deg]')
