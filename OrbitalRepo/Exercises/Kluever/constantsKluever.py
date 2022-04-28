@@ -7,5 +7,7 @@
 # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 rE = 6378             # Radius of Earth [km]
+rJupiter = 71492      # Radius of Jupiter [km]
 mu = 3.986e5          # gravitational constant [km^3/s^2]
+radGEO = 42164        # Radius of Geostationary Equatorial Orbit (GEO)
 
