@@ -40,6 +40,19 @@ def getInput():
 
     return rOrb,vel
 
+def print_results(h,E,a,p,ecc,T,rp,ra,fpa,TA):
+    print("----Results----")
+    print('Angular Momentum:   {:<.2f} [km^2/s]'.format(h))
+    print('Energy:             {:<.2f} [km^2/s^2]'.format(E))
+    print('Semimajor Axis:     {:<.2f} [km]'.format(a))
+    print('Parameter:          {:<.2f} [km]'.format(p))
+    print('Eccentricity:       {:<.2f} []'.format(ecc))
+    print('Period:             {:<.2f} [h]'.format(T))
+    print('Radias (periapsis): {:<.2f} [km]'.format(rp))
+    print('Radias (apoapsis):  {:<.2f} [km]'.format(ra))
+    print('Flight Path Angle:  {:<.2f} [deg]'.format(fpa))
+    print('True Anomaly:       {:<.2f} [deg]'.format(TA))
+
 
 # compute outputs (input: vectors)
 def compute(velocity,radOrbital):
@@ -51,7 +64,7 @@ def compute(velocity,radOrbital):
     totSpecEnergy = (velMag**2 / 2) - const.mu / rOrbMag
     
     # calc semimajor axis
-    semiMajAxis = -const.mu / 2 * totSpecEnergy
+    semiMajAxis = -const.mu / (2 * totSpecEnergy)
 
     # calc parameter
     param = (angMom**2)/const.mu
@@ -69,13 +82,12 @@ def compute(velocity,radOrbital):
 
     # calc flight path angle
     fpa = math.degrees( math.acos( angMom / rOrbMag / velMag ) )
-    fpa2 = math.degrees( math.atan( velocity[0]/velocity[1] ) )
-    print("fpa1: {:.3} fpa2: {:.3}".format(fpa,fpa2))
+    #fpa2 = math.degrees( math.atan( velocity[0]/velocity[1] ) )
 
     # calc true anomaly
     trueAnom = math.degrees( math.asin( (velocity[0]*angMom) / (const.mu * ecc) ) )
-    print(trueAnom)
 
+    print_results(h=angMom,E=totSpecEnergy,a=semiMajAxis,p=param,ecc=ecc,T=period,rp=radPer,ra=radApo,fpa=fpa,TA=trueAnom)
 
 ###MAIN###
 def main():
