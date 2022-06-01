@@ -15,8 +15,8 @@ import constantsKluever as const
 import math
 
 
-def calcMag(yourTuple):
-    mag = math.sqrt(yourTuple[0]**2 + yourTuple[1]**2)
+def calcMag(yourVector):
+    mag = math.sqrt(yourVector[0]**2 + yourVector[1]**2)
     return mag
 
 
