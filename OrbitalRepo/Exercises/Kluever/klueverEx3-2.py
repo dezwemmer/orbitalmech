@@ -2,10 +2,10 @@
 # Orbital Mechanics & Dynamics Software Collection
 # Author:   Steven Anderson
 # Created:  JUN 2022
-# Brief:    Example 3.1
-#           Tracking station determines state vector for Earth- 
-#           orbiting satellite (ECI coordinates: r0,v0).  Calc
-#           classical orbital elements.
+# Brief:    Example 3.2
+#           Classical orbital elements for Molniya orbit. 
+#           Determine state vector in ECI from OE.
+#           (OE > ECI coordinates)
 # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 import constantsKluever as const
@@ -15,8 +15,13 @@ import numpy as np
 
 #####
 # Givens:
-r0 = np.array([9031.5, -5316.9, -1647.2]) # [km]
-v0 = np.array([-2.8640, 5.1112, -5.0805]) # [km/s]
+semiMajAxis = 26554     # [km]
+ecc = 0.7411            # [n/a]
+incl = 63.4             # [deg]
+LascNode = 200          # [deg]
+argPer = -90            # [deg]
+trueAnom = 30           # [deg]
+
 
 def calcMag(yourVector):
     mag = math.sqrt(yourVector[0]**2 + yourVector[1]**2 + yourVector[2]**2)
