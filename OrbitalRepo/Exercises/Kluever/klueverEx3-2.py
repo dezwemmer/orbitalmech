@@ -1,9 +1,9 @@
 # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 # Orbital Mechanics & Dynamics Software Collection
 # Author:   Steven Anderson
-# Created:  JUN 2022
+# Created:  JUL 2022
 # Brief:    Example 3.2
-#           Classical orbital elements for Molniya orbit. 
+#           Given classical orbital elements for Molniya orbit. 
 #           Determine state vector in ECI from OE.
 #           (OE > ECI coordinates)
 # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -12,10 +12,9 @@ import constantsKluever as const
 import math
 import numpy as np
 
-
 #####
 # Givens:
-semiMajAxis = 26554     # [km]
+semiMajAxis = 26564     # [km]
 ecc = 0.7411            # [n/a]
 incl = 63.4             # [deg]
 LascNode = 200          # [deg]
@@ -27,56 +26,41 @@ def calcMag(yourVector):
     mag = math.sqrt(yourVector[0]**2 + yourVector[1]**2 + yourVector[2]**2)
     return mag
 
-def print_classicalOE(a,e,i,LAN,AP,TA):
-    print("----Classical Orbital Elements----")
-    print('Semimajor Axis:      {:<.2f} [km]'.format(a))
-    print('Eccentricity:        {:<.2f} []'.format(ecc))
-    print('Inclination:         {:<.2f} [deg]'.format(i))
-    print('Long Asc Node (LAN): {:<.2f} [deg]'.format(LAN))
-    print('Arg of Periapsis:    {:<.2f} [deg]'.format(AP))
-    print('True Anomaly:        {:<.2f} [deg]'.format(TA))
+def rotMatrixPQW_ECI(inclination,lonAscNode,argPeriapsis):
+    cOmega = math.cos(math.radians(lonAscNode))
+    comega = math.cos(math.radians(argPeriapsis))
+    cIncl = math.cos(math.radians(inclination))
+    sOmega = math.sin(math.radians(lonAscNode))
+    somega = math.sin(math.radians(argPeriapsis))
+    sIncl = math.sin(math.radians(inclination))
 
-
-#####
-# (a) Determine the classical orbital elements at this epoch
-# from the state vector (r0,v0)
-r0Mag = calcMag(r0)
-v0Mag = calcMag(v0)
-I = np.array([1, 0, 0])
-J = np.array([0, 1, 0])
-K = np.array([0, 0, 1])
-
-totSpecEnergy = (v0Mag**2 / 2) - (const.mu / r0Mag)
-semiMajAxis = -const.mu /(2*totSpecEnergy)
-
-eccVec = (1/const.mu)*((v0Mag**2 - const.mu/r0Mag)*r0 - (np.dot(r0,v0))*v0)
-ecc = calcMag(eccVec)
-
-angMomVec = np.cross(r0,v0)
-angMom = calcMag(angMomVec)
-incl = math.degrees( math.acos(np.dot(K,angMomVec)/angMom) )
-
-ascNodeVec = np.cross(K,angMomVec)
-
-sinLAN = np.dot(J,ascNodeVec)/calcMag(ascNodeVec)
-cosLAN = np.dot(I,ascNodeVec)/calcMag(ascNodeVec)
-LAN = math.degrees(math.atan2(sinLAN,cosLAN))
-
-cosArgPer = np.dot(ascNodeVec,eccVec)/(calcMag(ascNodeVec)*ecc)
-if eccVec[2] < 0:
-    argPer = 360 - math.degrees( math.acos(cosArgPer) )
-else:
-    argPer = math.degrees( math.acos(cosArgPer) )
-
-cosTA= np.dot(eccVec,r0)/(ecc*r0Mag)
-TAcheck = np.dot(r0,v0)
-if TAcheck < 0:
-    TA = 360 - math.degrees( math.acos(cosTA) )
-else:
-    TA = math.degrees( math.acos(cosTA) )
-
-print_classicalOE(semiMajAxis,ecc,incl,LAN,argPer,TA)
+    Rtilde = np.array([[(cOmega*comega-sOmega*somega*cIncl), (-cOmega*somega-sOmega*comega*cIncl), (sOmega*sIncl)],
+                [(sOmega*comega+cOmega*somega*cIncl), (-sOmega*somega+cOmega*comega*cIncl), (-cOmega*sIncl)],
+                [(somega*sIncl), (comega*sIncl), (cIncl)]])
+    return Rtilde
 
 #####
-# (b) is this in a Molniya orbit?
-# yes, based on a,e,i,and argPer
+# (a) Determine the satellite's state vector at this epoch in ECI
+param = semiMajAxis*( 1 - ecc**2 )
+angMom = math.sqrt( param*const.mu )
+
+# calculate the orbital radius at true anomaly (trajectory eqn)
+rOrb = param / ( 1 + ecc*math.cos(math.radians(trueAnom)) ) 
+
+# find position vector in perifocal (PQW) frame
+rPQW = np.array([rOrb*math.cos(math.radians(trueAnom)), rOrb*math.sin(math.radians(trueAnom)), 0 ])
+
+# calculate velocity vector in perifocal (PQW) frame
+vPQW = np.array([ (-const.mu/angMom)*math.sin(math.radians(trueAnom)), (const.mu/angMom)*(ecc + math.cos(math.radians(trueAnom))), 0 ])
+
+# calculate the overall rotation matrix from PQW to IJK/ECI frame
+Rtilde = np.ndarray.round(rotMatrixPQW_ECI(incl,LascNode,argPer),4,out=None)
+
+# calculate the state vectors rECI & vECI from rotation matrix
+rECI = np.matmul(Rtilde,rPQW)
+vECI = np.matmul(Rtilde,vPQW)
+
+print("rECI:")
+print (rECI)
+print("vECI:")
+print(vECI)

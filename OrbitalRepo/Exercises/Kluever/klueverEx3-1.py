@@ -6,6 +6,7 @@
 #           Tracking station determines state vector for Earth- 
 #           orbiting satellite (ECI coordinates: r0,v0).  Calc
 #           classical orbital elements.
+#           (ECI coordinates > classical OE)
 # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 import constantsKluever as const
