@@ -26,7 +26,7 @@ def model_2BP(state, t):
     z_ddot = -mu * z / (x ** 2 + y ** 2 + z ** 2) ** (3 / 2)
     dstate_dt = [x_dot, y_dot, z_dot, x_ddot, y_ddot, z_ddot]
     return dstate_dt
-
+ 
 # Initial Conditions
 X_0 = -2500  # [km]
 Y_0 = -5500  # [km]
