@@ -18,7 +18,7 @@ int main()
     const int satAltitude = 2124;       //km
     const float velInertial = 7.58;     //km/s
     const int flightPathAngle = 20;     //deg
-    
+
     // Constants:
     const int radEarth = 6378;          //km
     const float mu = 3.986e5;           //mu
@@ -52,8 +52,6 @@ int main()
     cout << "Total Specific Energy: " << totSpEnergy << " [km^2/s^2]" << endl;
     cout << "Angular Momentum: " << angMom << " [km^2/s]" << endl;
     cout << "Eccentricity: " << ecc << " [n/a]" << endl;
-
-
     
 
     return 0;
