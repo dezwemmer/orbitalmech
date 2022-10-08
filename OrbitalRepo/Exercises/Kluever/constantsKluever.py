@@ -14,3 +14,5 @@ muJupiter = 1.266865e8  # gravitational constant of Jupiter [km^3/s^2]
 
 radGEO = 42164          # Radius of Geostationary Equatorial Orbit (GEO)
 
+omegaE = 7.29212e-5     # angular velocity of Earth [rad/s]
+

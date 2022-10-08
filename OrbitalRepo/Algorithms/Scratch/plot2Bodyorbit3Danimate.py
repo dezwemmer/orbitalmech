@@ -13,6 +13,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import odeint
+from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import animation
 
 # Earth Model
@@ -55,9 +56,12 @@ Z_Sat = sol[:, 2]  # Z-coord [km] of satellite over time interval
 def animate_func(num):
     ax.clear()  # Clears the figure to update the line, point,   
                 # title, and axes    # Updating Trajectory Line (num+1 due to Python indexing)
-    ax.plot3D(X_Sat, Y_Sat, Z_Sat, 'black')    # Updating Point Location 
-    ax.scatter(X_Sat, Y_Sat, Z_Sat, 'black', marker = 'o')    # Adding Constant Origin
-    ax.plot3D(X_Sat, Y_Sat, Z_Sat, 'black', marker='o')    # Setting Axes Limits
+    ax.plot3D(sol[0, :num+1], sol[1, :num+1], sol[2, :num+1], 'blue')    # Updating Point Location 
+    #ax.plot3D(X_Sat, Y_Sat, Z_Sat, 'black')    # Updating Point Location 
+    ax.scatter(sol[0, num], sol[1, num], sol[2, num], 'blue', marker = 'o')    # Adding Constant Origin
+    #ax.scatter(X_Sat, Y_Sat, Z_Sat, 'black', marker = 'o')    # Adding Constant Origin
+    ax.plot3D(sol[0,0], sol[1, 0], sol[2, 0], 'black', marker='o')    # Setting Axes Limits
+    #ax.plot3D(X_Sat, Y_Sat, Z_Sat, 'black', marker='o')    # Setting Axes Limits
     ax.set_xlim3d([-1, 1])
     ax.set_ylim3d([-1, 1])
     ax.set_zlim3d([0, 100])
