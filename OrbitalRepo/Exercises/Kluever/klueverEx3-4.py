@@ -50,21 +50,16 @@ posSatECI = posSatECI_site + posSiteECI
 print("Satellite Pos rel2Inertial (ECI): ", posSatECI)
 
 # (II) Find Inertial Velocity Vector
-
 # calculate velocity components of Sat velocity relative to station (SEZ)
-#///////// idk why this isn't lining up with the example in the book...his units don't even align!!! /////////
 velSatS = -losRangeRate*math.cos(math.radians(losEl))*math.cos(math.radians(losAz)) + \
-            losRange*losElRate*math.sin(math.radians(losEl))*math.cos(math.radians(losAz)) + \
-            losRange*losAzRate*math.cos(math.radians(losEl))*math.sin(math.radians(losAz))
+            (losRange*losElRate*math.sin(math.radians(losEl))*math.cos(math.radians(losAz)))*(math.pi/180) + \
+            (losRange*losAzRate*math.cos(math.radians(losEl))*math.sin(math.radians(losAz)))*(math.pi/180)
 velSatE = losRangeRate*math.cos(math.radians(losEl))*math.sin(math.radians(losAz)) - \
-            losRange*losElRate*math.sin(math.radians(losEl))*math.sin(math.radians(losAz)) + \
-            losRange*losAzRate*math.cos(math.radians(losEl))*math.cos(math.radians(losAz))
-velSatZ = losRangeRate*math.sin(math.radians(losEl)) + losRange*losElRate*math.cos(math.radians(losEl))
+            (losRange*losElRate*math.sin(math.radians(losEl))*math.sin(math.radians(losAz)))*(math.pi/180) + \
+            (losRange*losAzRate*math.cos(math.radians(losEl))*math.cos(math.radians(losAz)))*(math.pi/180)
+velSatZ = losRangeRate*math.sin(math.radians(losEl)) + losRange*losElRate*math.cos(math.radians(losEl))*(math.pi/180)
 
 velSatSEZ = [velSatS,velSatE,velSatZ]
-#cheating it to match their stupid values
-velSatSEZ = np.array([4.1371, 6.9541, -1.3808])
-
 print("Station-relative velocity (SEZ): ", velSatSEZ)
 
 # transform velSEZ to velECI using transformation matrix D
@@ -76,3 +71,9 @@ omegaEarth = np.array([0, 0, const.omegaE])
 
 velInertialSatECI = velSatECI + np.cross(omegaEarth,posSatECI)
 print("Satellite Inertial Velocity (ECI): ",velInertialSatECI)
+
+# results
+print("////Satellite State Vector////")
+print("ECI Pos: ", posSatECI)
+print("ECI Velocity: ", velInertialSatECI)
+print("//////////////////////////////")
