@@ -2,7 +2,7 @@
 # Orbital Mechanics & Dynamics Software Collection
 # Author:   Steven Anderson
 # Created:  MAY 2022
-# Brief:    Based on Kluever 2.24
+# Brief:    Based on Kluever Problem 2.24
 #           Calculate characteristics of Earth orbit 
 #           User Input: orbital radius, radial velocity, and
 #           transverse velocity.
@@ -10,9 +10,13 @@
 
 from cmath import pi
 import sys
-sys.path.append('..\Exercises\Kluever')
+sys.path.append("..\Exercises\kluever")
 import constantsKluever as const
 import math
+
+# Example points
+# r = 8250ur km
+# v = 1.2054ur + 7.0263ut km/s
 
 
 def calcMag(yourVector):

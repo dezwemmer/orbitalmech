@@ -57,6 +57,9 @@ def animate_func(num):
     ax.clear()  # Clears the figure to update the line, point,   
                 # title, and axes    # Updating Trajectory Line (num+1 due to Python indexing)
     ax.plot3D(sol[0, :num+1], sol[1, :num+1], sol[2, :num+1], 'blue')    # Updating Point Location 
+    print(sol[0, num])
+    print(sol[0, num+1])
+    print(sol[0, :num+1])
     #ax.plot3D(X_Sat, Y_Sat, Z_Sat, 'black')    # Updating Point Location 
     ax.scatter(sol[0, num], sol[1, num], sol[2, num], 'blue', marker = 'o')    # Adding Constant Origin
     #ax.scatter(X_Sat, Y_Sat, Z_Sat, 'black', marker = 'o')    # Adding Constant Origin
@@ -103,10 +106,10 @@ line_ani = animation.FuncAnimation(fig, animate_func, interval=100,
                                    frames=numDataPoints)
 
 # Make axes limits
-xyzlim = np.array([ax.get_xlim3d(), ax.get_ylim3d(),      
-                   ax.get_zlim3d()]).T
-XYZlim = np.asarray([min(xyzlim[0]), max(xyzlim[1])])
-ax.set_xlim3d(XYZlim)
-ax.set_ylim3d(XYZlim)
-ax.set_zlim3d(XYZlim * 3/4)
+# xyzlim = np.array([ax.get_xlim3d(), ax.get_ylim3d(),      
+#                    ax.get_zlim3d()]).T
+# XYZlim = np.asarray([min(xyzlim[0]), max(xyzlim[1])])
+# ax.set_xlim3d(XYZlim)
+# ax.set_ylim3d(XYZlim)
+# ax.set_zlim3d(XYZlim * 3/4)
 plt.show()
