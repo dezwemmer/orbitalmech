@@ -28,8 +28,8 @@ lonNBAFS = 240.7        # [deg (from inertial I axis)] @ t0
 
 # determine inertial position of NBAFS in ECI
 posSiteECI = const.rE*np.array([math.cos(math.radians(latNBAFS))*math.cos(math.radians(lonNBAFS)), \
-            math.cos(math.radians(latNBAFS))*math.sin(math.radians(lonNBAFS)), \
-            math.sin(math.radians(latNBAFS))])
+                                math.cos(math.radians(latNBAFS))*math.sin(math.radians(lonNBAFS)), \
+                                math.sin(math.radians(latNBAFS))])
 print("Site Position (ECI): ",posSiteECI)
 
 # calculate satellite position relative to NBAFS (in SEZ)
@@ -40,7 +40,7 @@ print("Satellite Pos rel2Site (SEZ): ",posSatSEZ)
 
 # convert satellite position (relative to station) in SEZ to ECI using D matrix
 D = np.array([[math.sin(math.radians(latNBAFS))*math.cos(math.radians(lonNBAFS)), -math.sin(math.radians(lonNBAFS)), math.cos(math.radians(latNBAFS))*math.cos(math.radians(lonNBAFS))],
-     [math.sin(math.radians(latNBAFS))*math.sin(math.radians(lonNBAFS)), math.cos(math.radians(lonNBAFS)), math.cos(math.radians(latNBAFS))*math.cos(math.radians(lonNBAFS))],
+     [math.sin(math.radians(latNBAFS))*math.sin(math.radians(lonNBAFS)), math.cos(math.radians(lonNBAFS)), math.cos(math.radians(latNBAFS))*math.sin(math.radians(lonNBAFS))],
      [-math.cos(math.radians(latNBAFS)), 0, math.sin(math.radians(latNBAFS))]])
 posSatECI_site = np.matmul(D,posSatSEZ)
 print("Satellite Pos rel2Site (ECI): ",posSatECI_site)
